@@ -1,0 +1,6 @@
+LISTOFUSERS="sbartkowski"
+LOGDIR=/tmp/dupl
+LISTOFDEST="file xxxx"
+file="file:///tmp/local"
+xxxx=yyyyy
+

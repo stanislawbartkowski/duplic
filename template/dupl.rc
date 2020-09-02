@@ -1,0 +1,3 @@
+PASSPHRASE=sbartkowski
+DHOME=/home/sbartkowski
+DINCLUDE="--include $DHOME/.local/share/gnote --include $DHOME/projects --include $DHOME/.var/app/org.gnome.Gnote"
