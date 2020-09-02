@@ -1,2 +1,4 @@
 /resource.rc
 /dupl.rc
+/log/*
+/crontab

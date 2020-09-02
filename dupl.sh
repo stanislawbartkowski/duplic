@@ -1,14 +1,14 @@
 source `dirname $0`/resource.rc
 
 LOGFILE=$LOGDIR/myduplicity.log
-DUPLDIR=duplx
+DUPLDIR=dupl
 RESFILE=dupl.rc
 
 # ===============================================
 
 log() {
     local -r mess="$1"
-#    echo "$mess" >>$LOGFILE
+    echo "$mess" >>$LOGFILE
     echo "$mess"
 }
 
@@ -80,24 +80,28 @@ verify() {
 rundupl() {
     local -r DUHOME=$1
     local -r DEST=$2
-    local -r ISSUDO=$3
+    local -r OUTLOG=$3
+    local -r ISSUDO=$4
     FULL="--full-if-older-than 1M"
     export PASSPHRASE=$PASSPHRASE 
     SUDO=
     if [ -n "$ISSUDO" ]; then
         SUDO="sudo --preserve-env=PASSPHRASE"
     fi
-    $SUDO duplicity -v 5  $DUHOME $DINCLUDE  --exclude '**' $FULL --allow-source-mismatch "$DEST"
+    log "dupl $DUHOME $DEST"
+    $SUDO duplicity -v 5  $DUHOME $DINCLUDE  --exclude '**' $FULL --allow-source-mismatch "$DEST" >>$OUTLOG
 }
 
 removeoldbackup(){
     local -r DEST=$1
-    local -r ISSUDO=$2
+    local -r OUT=$2
+    local -r ISSUDO=$r3
     export PASSPHRASE=$PASSPHRASE 
     if [ -n "$ISSUDO" ]; then
         SUDO="sudo --preserve-env=PASSPHRASE"
     fi
-    $SUDO duplicity remove-older-than 2M --force $DEST
+    log "Try to remove $DEST"
+    $SUDO duplicity remove-older-than 2M --force $DEST >>$OUT
 }
 
 
@@ -115,9 +119,9 @@ dupluser() {
     source $rcfile
     required_listofvars PASSPHRASE DINCLUDE
     local -r dest="${!what}/dupl.$user"
-    rundupl $home $dest
-    removeoldbackup $dest
-    
+    local -r out=$LOGDIR/$user-$what.out
+    rundupl $home $dest $out
+    removeoldbackup $dest $out
 }
 
 run() {
