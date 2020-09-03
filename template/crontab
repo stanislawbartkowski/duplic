@@ -1,0 +1,3 @@
+0 16 * * * /usr/local/duplic/dupl.sh usb
+0 18 * * * /usr/local/duplic/dupl.sh usb1
+
