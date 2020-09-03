@@ -92,6 +92,9 @@ rundupl() {
     fi
     log "dupl $DUHOME $DEST"
     $SUDO $DUPLICITY -v 5  $DUHOME $DINCLUDE  --exclude '**' $FULL --allow-source-mismatch "$DEST" >>$OUTLOG
+    local -r RES=$?
+    [ $RES -ne 0 ] && log "Non zero exit code $RES"
+    [ $RES -eq 0 ] && log "Success"
 }
 
 removeoldbackup(){
@@ -104,6 +107,9 @@ removeoldbackup(){
     fi
     log "Try to remove $DEST"
     $SUDO $DUPLICITY remove-older-than 2M --force $DEST >>$OUT
+    local -r RES=$?
+    [ $RES -ne 0 ] && log "Non zero exit code $RES"
+    [ $RES -eq 0 ] && log "Success"
 }
 
 
