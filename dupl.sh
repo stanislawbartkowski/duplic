@@ -1,3 +1,5 @@
+#!/bin/bash
+
 source `dirname $0`/resource.rc
 
 LOGFILE=$LOGDIR/myduplicity.log
