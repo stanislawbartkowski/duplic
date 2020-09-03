@@ -1,3 +1,5 @@
+DUPLICITY=/var/lib/snapd/snap/bin/duplicity
+
 LISTOFUSERS="sbartkowski"
 LOGDIR=/tmp/dupl
 LISTOFDEST="file xxxx"

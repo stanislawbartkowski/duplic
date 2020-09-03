@@ -67,7 +67,7 @@ existfile() {
 
 verify() {
     local -r WHAT=$1
-    required_listofvars LISTOFUSERS LOGDIR LISTOFDEST
+    required_listofvars LISTOFUSERS LOGDIR LISTOFDEST DUPLICITY
     [ -z "$WHAT" ] && printhelp
 
     onthelist $WHAT "$LISTOFDEST"
@@ -91,7 +91,7 @@ rundupl() {
         SUDO="sudo --preserve-env=PASSPHRASE"
     fi
     log "dupl $DUHOME $DEST"
-    $SUDO duplicity -v 5  $DUHOME $DINCLUDE  --exclude '**' $FULL --allow-source-mismatch "$DEST" >>$OUTLOG
+    $SUDO $DUPLICITY -v 5  $DUHOME $DINCLUDE  --exclude '**' $FULL --allow-source-mismatch "$DEST" >>$OUTLOG
 }
 
 removeoldbackup(){
@@ -103,7 +103,7 @@ removeoldbackup(){
         SUDO="sudo --preserve-env=PASSPHRASE"
     fi
     log "Try to remove $DEST"
-    $SUDO duplicity remove-older-than 2M --force $DEST >>$OUT
+    $SUDO $DUPLICITY remove-older-than 2M --force $DEST >>$OUT
 }
 
 
@@ -129,6 +129,9 @@ dupluser() {
 run() {
     local -r what=$1
     verify $what
+    log "=========================="
+    log "`date`"
+    log $DUPLICITY
     mkdir -p $LOGDIR
     for user in $LISTOFUSERS; do dupluser $what $user; done
 }
