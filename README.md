@@ -36,6 +36,13 @@ The *resource.rc* file contains a list of users to be backuped and list of backu
 | LISTOFDEST | List of space separated backup destination names. The namea are arbtrary and should be followed by destination specification | "file remoteserver". In every destination, the tool is creating *dupl.username* directory for backup containers.
 | "destname" | The variable should exist in the LISTOFDEST variable. Contains the destination specification expected by *duplicity* | file="file:///tmp/local"
 
+Example of destination specification: 
+
+| Example | Description | 
+| --- | ----- |
+| "file:///tmp/local" | The destination directory is the local directory. Important: the tools is adding *dupl.username* directory name to avoid backup overlapping for users
+
+
 ## Configuration for a user
 
 The user specific file is expected to be *USERHOME*/dupl/dupl.rc
