@@ -40,7 +40,8 @@ Example of destination specification:
 
 | Example | Description | 
 | --- | ----- |
-| "file:///tmp/local" | The destination directory is the local directory. Important: the tools is adding *dupl.username* directory name to avoid backup overlapping for users
+| file="file:///tmp/local" | The destination directory is the local directory. Important: the tools is adding *dupl.username* directory name to avoid backup overlapping for users
+| remotessh="sftp://repo@broth1/dupl.sbartkowski" | The destination directory is remote server. A passwordless connection between the local host and *repo@broth1* user should be configured beforehand
 
 
 ## Configuration for a user
