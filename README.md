@@ -36,5 +36,8 @@ The *resource.rc* file contains a list of users to be backuped and list of backu
 | LISTOFDEST | List of space separated backup destination names. The namea are arbtrary and should be followed by destination specification | "file remoteserver"
 | "destname" | The variable should exist in the LISTOFDEST variable. Contains the destination specification expected by *duplicity* | file="file:///tmp/local"
 
+## Execution
 
-
+>./run.sh /dest/<br>
+<br>
+*run.sh* requires a single parameter, the destination name. The destination name is expected to be one of the name on *LISTOFDEST* list. It makes a backup copy for all users specified in *LISTOFUSER* list.
