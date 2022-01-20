@@ -93,3 +93,7 @@ Command.
 Corresponding duplicity command.<br>
 > /usr/bin/duplicity -v 5 /home/sbartkowski --include /home/sbartkowski/dupl --include /home/sbartkowski/.local/share/gnote --include /home/sbartkowski/projects --include /home/sbartkowski/.var/app/org.gnome.Gnote --exclude ** --full-if-older-than 1M --allow-source-mismatch file:///tmp/local/dupl.sbartkowski
 
+Several remarks:<br>
+* In the target backup directory, the tools is creating a specific for user *dupl.username* directory. Here *dupl.sbartkowski*
+* Full, not incremental, backup every 1 N
+* Important: after every run, the tools is removing all copies older then 2 months. Only last 2 months copies are stored.
