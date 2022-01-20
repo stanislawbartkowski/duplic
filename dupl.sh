@@ -1,48 +1,11 @@
 #!/bin/bash
 
+source `dirname $0`/common/commonproc.sh
+
 source `dirname $0`/resource.rc
 
-LOGFILE=$LOGDIR/myduplicity.log
 DUPLDIR=dupl
 RESFILE=dupl.rc
-
-# ===============================================
-
-log() {
-    local -r mess="$1"
-    echo "$mess" >>$LOGFILE
-    echo "$mess"
-}
-
-logfail() {
-    local -r mess="$1"
-    log "$mess"
-    log "FAILURE - cannot continue"
-    exit 4
-}
-
-required_var() {
-    local -r VARIABLE=$1
-    [ -z "${!VARIABLE}" ] && logfail "Need to set environment variable: $VARIABLE"    
-}
-
-required_listofvars() {
-    while true; do
-        var=$1
-        [ -z "$var" ] && break
-        required_var $var
-        shift
-    done
-}
-
-onthelist() {
-    local -r word=$1
-    local -r list=$2
-    for w in ${list//,/ }; do
-        [ $w == $word ] &&  return
-    done
-    logfail "$word is not on the list:  $list"
-}
 
 printhelp() {
     echo "dupl.sh /what/"
@@ -54,16 +17,6 @@ printhelp() {
     exit 4
 }
 
-
-checkuser() {
-    local -r user=$1
-    if ! id $user >/dev/null; then logfail "$user does not exist"; fi    
-}
-
-existfile() {
-    local -r FILENAME=$1
-    [ -f $FILENAME ] || logfail "$FILENAME does not exist"
-}
 
 verify() {
     local -r WHAT=$1
@@ -84,16 +37,17 @@ rundupl() {
     local -r DEST=$2
     local -r OUTLOG=$3
     local -r ISSUDO=$4
-    FULL="--full-if-older-than 1M"
+    FULL="--full-if-older-than $FULLC"
     export PASSPHRASE=$PASSPHRASE 
     SUDO=
     if [ -n "$ISSUDO" ]; then
         SUDO="sudo --preserve-env=PASSPHRASE"
     fi
     log "dupl $DUHOME $DEST"
+    log "$SUDO $DUPLICITY -v 5  $DUHOME $DINCLUDE  --exclude '**' $FULL --allow-source-mismatch $DEST"
     $SUDO $DUPLICITY -v 5  $DUHOME $DINCLUDE  --exclude '**' $FULL --allow-source-mismatch "$DEST" >>$OUTLOG
     local -r RES=$?
-    [ $RES -ne 0 ] && log "Non zero exit code $RES"
+    [ $RES -ne 0 ] && logfail "Non zero exit code $RES"
     [ $RES -eq 0 ] && log "Success"
 }
 
@@ -105,10 +59,10 @@ removeoldbackup(){
     if [ -n "$ISSUDO" ]; then
         SUDO="sudo --preserve-env=PASSPHRASE"
     fi
-    log "Try to remove $DEST"
-    $SUDO $DUPLICITY remove-older-than 2M --force $DEST >>$OUT
+    log "Try to remove $DEST older than $REMOVEC"
+    $SUDO $DUPLICITY remove-older-than $REMOVEC --force $DEST >>$OUT
     local -r RES=$?
-    [ $RES -ne 0 ] && log "Non zero exit code $RES"
+    [ $RES -ne 0 ] && logfail "Non zero exit code $RES"
     [ $RES -eq 0 ] && log "Success"
 }
 
@@ -118,7 +72,7 @@ dupluser() {
     local -r user=$2
     local -r home=`eval echo ~$user`
     local -r dupldir=$home/$DUPLDIR
-    log "$yser $home $what"
+    log "$user $home $what"
     [ -d $dupldir ] || logfail "$dupldir does not exist"
     local -r rcfile=$dupldir/$RESFILE
     existfile $rcfile
@@ -141,5 +95,13 @@ run() {
     mkdir -p $LOGDIR
     for user in $LISTOFUSERS; do dupluser $what $user; done
 }
+
+
+definevars() {
+    FULLC=${FULLC:-1M}
+    REMOVEC=${REMOVEC:-3M}
+}
+
+definevars
 
 run $1

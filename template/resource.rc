@@ -1,8 +1,9 @@
 DUPLICITY=/var/lib/snapd/snap/bin/duplicity
 
-LISTOFUSERS="sbartkowski"
+LISTOFUSERS="sbartkowski wiki"
 LOGDIR=/tmp/dupl
-LISTOFDEST="file xxxx"
+LISTOFDEST="file remotessh"
 file="file:///tmp/local"
-xxxx=yyyyy
+remotessh="sftp://repo@broth1/dupl.sbartkowski"
+
 
