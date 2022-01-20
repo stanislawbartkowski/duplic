@@ -33,7 +33,7 @@ The *resource.rc* file contains a list of users to be backuped and list of backu
 | DUPLICITY | Path for *duplicity* utility. If the script is to be executed as cron job, it is recommended to define a full path | DUPLICITY=/var/lib/snapd/snap/bin/duplicity
 | LISTOFUSER | List of space separated users id. The user must exist in the system | "sbartkowski wiki"
 | LOGDIR | Log directory | /tmp/dupllog
-| LISTOFDEST | List of space separated backup destination names. The namea are arbtrary and should be followed by destination specification | "file remoteserver"
+| LISTOFDEST | List of space separated backup destination names. The namea are arbtrary and should be followed by destination specification | "file remoteserver". In every destination, the tool is creating *dupl.username* directory for backup containers.
 | "destname" | The variable should exist in the LISTOFDEST variable. Contains the destination specification expected by *duplicity* | file="file:///tmp/local"
 
 ## Configuration for a user
