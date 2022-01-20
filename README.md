@@ -55,7 +55,8 @@ The user specific file is expected to be *USERHOME*/dupl/dupl.rc
 | PASSPHRASE | Specific for *duplicity*. Used for backup encryption.  | PASSPHRASE=sbartkowski
 | DINCLUDE | Parameter passed to *duplicity* tool. Contains all directories to be backuped | DINCLUDE="--include $DHOME/dupl --include $DHOME/.local/share/gnote --include $DHOME/projects --include $DHOME/.var/app/org.gnome.Gnote"
 
-Example.<br>
+Example<br>
+
 Variable *DHOME* here is used only to simplify the setting of *DINCLUDE* variable.
 
 ```
@@ -75,7 +76,7 @@ The tool requires a single parameter, the destination name. The destination name
 
 The tool is running *duplicity* command for every user listed in the *LISTOFUSERS* variable. If the variable contains the names of three users, three *duplicity* is executed three times. The *duplicity* command is constructed using definitions found in command *resource.rc* file and user specific *userhome/dupl/dupl.rc* file.<br>
 
-Example:
+Example
 
 > cat resource.rc<br>
 ```
@@ -94,7 +95,7 @@ DHOME=/home/sbartkowski
 DINCLUDE="--include $DHOME/dupl --include $DHOME/.local/share/gnote --include $DHOME/projects --include $DHOME/.var/app/org.gnome.Gnote"
 ```
 
-Command.
+Command
 
 >./dupl.sh file<br>
 
