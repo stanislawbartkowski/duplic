@@ -1,6 +1,6 @@
 # duplic
 
-It is a simple project making use of *duplicity* https://en.wikipedia.org/wiki/Duplicity_(software) software suite. It allows a single point for making a backup copy for users in the Linux system.<br>
+It is a simple project making use of *duplicity* https://en.wikipedia.org/wiki/Duplicity_(software) software suite. It allows to create a single point for making a backup copy for users in the Linux system.<br>
 
 # Configuration
 
