@@ -60,6 +60,7 @@ DINCLUDE="--include $DHOME/dupl --include $DHOME/.local/share/gnote --include $D
 
 >./run.sh /dest/<br>
 <br>
+
 The tool requires a single parameter, the destination name. The destination name is expected to be one of the name on *LISTOFDEST* list. It makes a backup copy for all users specified in *LISTOFUSER* list.
 
 
