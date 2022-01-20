@@ -36,8 +36,32 @@ The *resource.rc* file contains a list of users to be backuped and list of backu
 | LISTOFDEST | List of space separated backup destination names. The namea are arbtrary and should be followed by destination specification | "file remoteserver"
 | "destname" | The variable should exist in the LISTOFDEST variable. Contains the destination specification expected by *duplicity* | file="file:///tmp/local"
 
+## Configuration for a user
+
+The user specific file is expected to be *USERHOME*/dupl/dupl.rc
+
+> vi  ~/dupl/dupl.rc<br>
+
+| Variable | Description | Sample
+| ---- | ----- | ----- |
+| PASSPHRASE | Specific for *duplicity*. Used for backup encryption.  | PASSPHRASE=sbartkowski
+| DINCLUDE | Parameter passed to *duplicity* tool. Contains all directories to be backuped | DINCLUDE="--include $DHOME/dupl --include $DHOME/.local/share/gnote --include $DHOME/projects --include $DHOME/.var/app/org.gnome.Gnote"
+
+Example.<br>
+Variable *DHOME* here is used only to simplify the setting of *DINCLUDE* variable.
+
+```
+PASSPHRASE=sbartkowski
+DHOME=/home/sbartkowski
+DINCLUDE="--include $DHOME/dupl --include $DHOME/.local/share/gnote --include $DHOME/projects --include $DHOME/.var/app/org.gnome.Gnote"
+```
+
 ## Execution
 
 >./run.sh /dest/<br>
 <br>
 *run.sh* requires a single parameter, the destination name. The destination name is expected to be one of the name on *LISTOFDEST* list. It makes a backup copy for all users specified in *LISTOFUSER* list.
+
+
+
+
