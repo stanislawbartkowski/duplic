@@ -31,7 +31,7 @@ The *resource.rc* file contains a list of users to be backuped and list of backu
 | Variable | Description | Sample
 | ---- | ---- | ---- |
 | DUPLICITY | Path for *duplicity* utility. If the script is to be executed as cron job, it is recommended to define a full path | DUPLICITY=/var/lib/snapd/snap/bin/duplicity
-| LISTOFUSER | List of space separated users id. The user must exist in the system | "sbartkowski wiki"
+| LISTOFUSERS | List of space separated users id. The user must exist in the system | "sbartkowski wiki"
 | LOGDIR | Log directory | /tmp/dupllog
 | LISTOFDEST | List of space separated backup destination names. The namea are arbtrary and should be followed by destination specification | "file remoteserver". In every destination, the tool is creating *dupl.username* directory for backup containers.
 | "destname" | The variable should exist in the LISTOFDEST variable. Contains the destination specification expected by *duplicity* | file="file:///tmp/local"
@@ -61,8 +61,35 @@ DINCLUDE="--include $DHOME/dupl --include $DHOME/.local/share/gnote --include $D
 >./run.sh /dest/<br>
 <br>
 
-The tool requires a single parameter, the destination name. The destination name is expected to be one of the name on *LISTOFDEST* list. It makes a backup copy for all users specified in *LISTOFUSER* list.
+The tool requires a single parameter, the destination name. The destination name is expected to be one of the name on *LISTOFDEST* list. It makes a backup copy for all users specified in *LISTOFUSERS* list.<br>
 
+## Making a backup
 
+The tool is running *duplicity* command for every user listed in the *LISTOFUSERS* variable. If the variable contains the names of three users, three *duplicity* is executed three times. The *duplicity* command is constructed using definitions found in command *resource.rc* file and user specific *userhome/dupl/dupl.rc* file.<br>
 
+Example:
+
+> cat resource.rc<br>
+```
+DUPLICITY=/usr/bin/duplicity
+
+LISTOFUSERS="sbartkowski"
+LOGDIR=/tmp/dupl
+LISTOFDEST="file"
+file="file:///tmp/local"
+```
+
+> cat ~/dupl/dupl.rc
+```
+PASSPHRASE=sbartkowski
+DHOME=/home/sbartkowski
+DINCLUDE="--include $DHOME/dupl --include $DHOME/.local/share/gnote --include $DHOME/projects --include $DHOME/.var/app/org.gnome.Gnote"
+```
+
+Command.
+
+>./dupl.sh file<br>
+
+Corresponding duplicity command.<br>
+> /usr/bin/duplicity -v 5 /home/sbartkowski --include /home/sbartkowski/dupl --include /home/sbartkowski/.local/share/gnote --include /home/sbartkowski/projects --include /home/sbartkowski/.var/app/org.gnome.Gnote --exclude ** --full-if-older-than 1M --allow-source-mismatch file:///tmp/local/dupl.sbartkowski
 
