@@ -104,5 +104,5 @@ Corresponding duplicity command.<br>
 
 Several remarks:<br>
 * In the target backup directory, the tools is creating a specific for user *dupl.username* directory. Here *dupl.sbartkowski*
-* Full, not incremental, backup every 1 N
+* Full, not incremental, backup every 1 month
 * Important: after every run, the tools is removing all copies older then 2 months. Only last 2 months copies are stored.
