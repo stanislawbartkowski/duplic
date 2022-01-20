@@ -14,3 +14,20 @@ So the user is providing *what* is backuped and the root user is defining *where
 
 ## Installation
 
+The tools is executed by *root* user. <br>
+
+> git clone https://github.com/stanislawbartkowski/duplic.git
+
+## Configuration
+
+*Template* folder contains sample example of configuration files to be configured.
+
+> cp template/* . <br>
+
+> vi resource.rc<br>
+
+The *resource.rc* file contains a list of users to be backuped and list of backup destinations.
+
+| Variable | Description | Sample
+| ---- | ---- | ---- |
+| DUPLICITY | Path of *duplicity* script | DUPLICITY=/var/lib/snapd/snap/bin/duplicity
